@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Tracker</title>
+</head>
+<body>
+    
+    <div>
+        <h1>Sell & Track</h1>
+    </div>
+    <div>
+            <input type="text" id="name" placeholder="item-name">
+            <input type="text" id="description" placeholder="description">
+            <input type="text" id="price" placeholder="price">
+            <input type="number" id="quantity" placeholder="quantity">
+            <button type="submit" class="btn" onclick="getData()">Add Item</button>
+
+    </div>
+    <ul id="stock"></ul>
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+<script src="app.js"></script>
+</html>
