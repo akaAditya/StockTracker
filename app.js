@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 function getData(){
     let name = document.getElementById("name").value;
     let description = document.getElementById("description").value;
@@ -114,7 +114,6 @@ function showOnScreen(obj){
     childElement.appendChild(buy3Button);
     parentElement.appendChild(childElement);
 }
-=======
 
 
 function getData(){
@@ -228,4 +227,3 @@ function showOnScreen(obj){
     childElement.appendChild(buy3Button);
     parentElement.appendChild(childElement);
 }
->>>>>>> 944c03f9ee92cdbd9cdcfceeef0fe4b639b18a1e
