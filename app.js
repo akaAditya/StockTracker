@@ -11,13 +11,13 @@ function getData(){
         price: price,
         quantity: quantity
     }
-    axios.post('https://crudcrud.com/api/ae01a833453341a6a58310706af3a47b/inventory', obj)
+    axios.post('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
     .then((res)=>{console.log(res.data)}).catch((err)=>{console.log(err)});
     showOnScreen(obj)
 }
 
 window.onload = function(obj){
-    axios.get('https://crudcrud.com/api/ae01a833453341a6a58310706af3a47b/inventory', obj)
+    axios.get('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
     .then((res)=>{
         for(let user=0; user<res.data.length; user++){
             showOnScreen(res.data[user]);
@@ -26,7 +26,7 @@ window.onload = function(obj){
     }
 
 function deleteData(objId){
-    axios.delete(`https://crudcrud.com/api/ae01a833453341a6a58310706af3a47b/inventory/${objId}`)
+    axios.delete(`https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory/${objId}`)
     .then((res)=>{
         console.log(res)
     })
@@ -36,7 +36,7 @@ function deleteData(objId){
 
 
 function updateData(obj){
-    axios.put('https://crudcrud.com/api/ae01a833453341a6a58310706af3a47b/inventory', obj)
+    axios.put('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
     .then((res)=>{console.log(res.data)}).catch((err)=>{console.log(err)});
     showOnScreen(obj)
 }
@@ -99,7 +99,8 @@ function showOnScreen(obj){
 
         if(obj.quantity>0){
             obj.quantity -= 3;
-        }else{
+        }
+        else{
             alert("Item is out of stock");
         }
         document.getElementById("name").value = obj.name;
