@@ -1,3 +1,4 @@
+// Stock Tracker
 
 function getData(){
     let name = document.getElementById("name").value;
@@ -11,42 +12,56 @@ function getData(){
         price: price,
         quantity: quantity
     }
-    axios.post('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
-    .then((res)=>{console.log(res.data)}).catch((err)=>{console.log(err)});
+    postData(obj);
     showOnScreen(obj)
+
 }
 
-window.onload = function(obj){
-    axios.get('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
-    .then((res)=>{
-        for(let user=0; user<res.data.length; user++){
-            showOnScreen(res.data[user]);
-        }})
-        .catch((err)=>{console.log(err)});
+async function postData(obj){
+    try {
+        let response = await axios.post(`https://crudcrud.com/api/281064e8d6884234abcd4a08d433946b/inventory`, obj)
+        console.log(response.data);
+    } catch (error) {
+        console.log(error)
     }
-
-function deleteData(objId){
-    axios.delete(`https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory/${objId}`)
-    .then((res)=>{
-        console.log(res)
-    })
-    .catch((err)=>{console.log(err)});
-    RemoveItemFromScreen(objId)
 }
 
+window.onload = async function(obj){
 
-function updateData(obj){
-    axios.put('https://crudcrud.com/api/e0404a201fe243949847b5827b235040/inventory', obj)
-    .then((res)=>{console.log(res.data)}).catch((err)=>{console.log(err)});
-    showOnScreen(obj)
+    try {
+        let response = await axios.get('https://crudcrud.com/api/281064e8d6884234abcd4a08d433946b/inventory', obj)
+        for(let user=0; user<response.data.length; user++){
+            showOnScreen(response.data[user]);
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
+async function deleteData(obj){
+    try {
+      let response = await axios.delete(`https://crudcrud.com/api/281064e8d6884234abcd4a08d433946b/inventory/${obj}`)
+        console.log(response)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-function RemoveItemFromScreen(objId){
-    const parentNode = document.getElementById('stock');
-    const deleteChild = document.getElementById(objId);
-    if(deleteChild){
-        parentNode.removeChild(deleteChild);
+async function updateData(userId, obj){
+    let input = {
+        name: obj.name,
+        description: obj.description,
+        price: obj.price,
+        quantity: obj.quantity
+    }
+    try {
+        let response = await axios.put(`https://crudcrud.com/api/281064e8d6884234abcd4a08d433946b/inventory/${userId}`,input)
+        console.log(response)
+        showOnScreen(input)
+        
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -55,8 +70,7 @@ function showOnScreen(obj){
     
     let parentElement = document.getElementById('stock');
     let childElement = document.createElement('li');
-    let elemQuantity = document.getElementById('quantity').value;
-    childElement.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity
+    childElement.textContent = obj.name + ' - ' + obj.description + ' - ' + obj.price + ' - ' + obj.quantity;
 
     const buy1Button = document.createElement('input');
     buy1Button.type = 'button';
@@ -65,14 +79,12 @@ function showOnScreen(obj){
 
         if(obj.quantity>0){
             obj.quantity -= 1;
+            parentElement.removeChild(childElement);
         }else{
             alert("Item is out of stock");
         }
-        document.getElementById("name").value = obj.name;
-        document.getElementById("description").value = obj.description;
-        document.getElementById("price").value = obj.price;
-        document.getElementById("quantity").value = obj.quantity;
-        deleteData(obj._id);
+        updateData(obj._id, obj);
+        
     }
         
     const buy2Button = document.createElement('input');
@@ -82,14 +94,12 @@ function showOnScreen(obj){
 
         if(obj.quantity>0){
             obj.quantity -= 2;
+            parentElement.removeChild(childElement);
         }else{
             alert("Item is out of stock");
         }
-        document.getElementById("name").value = obj.name;
-        document.getElementById("description").value = obj.description;
-        document.getElementById("price").value = obj.price;
-        document.getElementById("quantity").value = obj.quantity;
-        deleteData(obj._id);
+        updateData(obj._id, obj);
+        
     }
         
     const buy3Button = document.createElement('input');
@@ -99,17 +109,13 @@ function showOnScreen(obj){
 
         if(obj.quantity>0){
             obj.quantity -= 3;
+            parentElement.removeChild(childElement);
         }
         else{
             alert("Item is out of stock");
         }
-        document.getElementById("name").value = obj.name;
-        document.getElementById("description").value = obj.description;
-        document.getElementById("price").value = obj.price;
-        document.getElementById("quantity").value = obj.quantity;
-        deleteData(obj._id);
+        updateData(obj._id, obj);
     }
-     
     childElement.appendChild(buy1Button);
     childElement.appendChild(buy2Button);
     childElement.appendChild(buy3Button);
